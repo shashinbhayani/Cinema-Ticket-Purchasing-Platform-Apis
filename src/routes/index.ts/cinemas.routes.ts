@@ -17,3 +17,8 @@ cinemaRouter.post(
   cinemaMiddlewares.bookSeat,
   cinemasControllers.bookSeat,
 );
+
+cinemaRouter.post(
+  "/:id/seats/purchase-two-consecutive",
+  cinemasControllers.bookTwoConsecutiveSeats,
+);

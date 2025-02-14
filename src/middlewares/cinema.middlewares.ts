@@ -41,7 +41,7 @@ const bookSeat = async (req: Request, res: Response, next: NextFunction) => {
 
     if (!cinema) {
       error = "Cinema not found";
-    } else if (parseInt(seat) >= cinema?.seats.length!) {
+    } else if (parseInt(seat) > cinema?.seats.length!) {
       error = "Invalid seat number";
     } else {
       const seatDetail = cinema.seats.find(

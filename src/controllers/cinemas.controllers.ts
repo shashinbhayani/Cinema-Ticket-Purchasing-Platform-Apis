@@ -18,9 +18,10 @@ import { cinemasServices } from "../services/cinemas.services";
  */
 const getCinemas = async (req: Request, res: Response) => {
   try {
-    const cinemas = await cinemasServices.getCinemas();
-    res.json(cinemas);
+    const response = await cinemasServices.getCinemas();
+    res.json(response);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: "Internal server error" });
   } finally {
     return;
@@ -147,8 +148,70 @@ const bookSeat = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * @swagger
+ * /cinemas/{id}/seats/purchase-two-consecutive:
+ *   post:
+ *     summary: Book two consecutive seats in a cinema
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The cinema ID
+ *     responses:
+ *       200:
+ *         description: Two consecutive seats booked successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *       400:
+ *         description: Bad request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ */
+const bookTwoConsecutiveSeats = async (req: Request, res: Response) => {
+  try {
+    console.log('====================================');
+    console.log('req.params', req.params);
+    console.log('====================================');
+    const { id } = req.params;
+
+    const response = await cinemasServices.bookTwoConsecutiveSeats(id);
+
+    res.json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
+  } finally {
+    return;
+  }
+};
+
 export const cinemasControllers = {
   getCinemas,
   createCinema,
   bookSeat,
+  bookTwoConsecutiveSeats,
 };
