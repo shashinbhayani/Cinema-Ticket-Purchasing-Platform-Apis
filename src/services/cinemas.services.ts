@@ -26,7 +26,30 @@ const createCinema = async (data: TCreateCinema) => {
   return cinema;
 };
 
+const bookSeat = async (id: string, seat: number) => {
+  const cinema = await Cinema.findOne({ _id: id });
+
+  if (!cinema) {
+    return {
+      success: false,
+      error: "Cinema not found",
+    };
+  }
+
+  const seatIndex = cinema.seats.findIndex((i) => i.seatNumber === seat);
+
+  cinema.seats[seatIndex].isAvailable = false;
+
+  await cinema.save();
+
+  return {
+    success: true,
+    message: "Seat booked successfully",
+  };
+};
+
 export const cinemasServices = {
   getCinemas,
   createCinema,
+  bookSeat,
 };

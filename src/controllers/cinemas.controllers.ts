@@ -84,7 +84,71 @@ const createCinema = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * @swagger
+ * /cinemas/{id}/book/{seat}:
+ *   post:
+ *     summary: Book a seat in a cinema
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The cinema ID
+ *       - in: path
+ *         name: seat
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: The seat number to book
+ *     responses:
+ *       200:
+ *         description: Seat booked successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *       400:
+ *         description: Bad request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ */
+const bookSeat = async (req: Request, res: Response) => {
+  const { id, seat } = req.params;
+
+  try {
+    const cinema = await cinemasServices.bookSeat(id, parseInt(seat));
+    res.json(cinema);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
+  } finally {
+    return;
+  }
+};
+
 export const cinemasControllers = {
   getCinemas,
   createCinema,
+  bookSeat,
 };

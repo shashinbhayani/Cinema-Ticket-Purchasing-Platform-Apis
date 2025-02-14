@@ -5,8 +5,15 @@ import { cinemaMiddlewares } from "../../middlewares/cinema.middlewares";
 export const cinemaRouter = Router();
 
 cinemaRouter.get("/", cinemasControllers.getCinemas);
+
 cinemaRouter.post(
   "/",
   cinemaMiddlewares.createCinema,
   cinemasControllers.createCinema,
+);
+
+cinemaRouter.post(
+  "/:id/book/:seat",
+  cinemaMiddlewares.bookSeat,
+  cinemasControllers.bookSeat,
 );
