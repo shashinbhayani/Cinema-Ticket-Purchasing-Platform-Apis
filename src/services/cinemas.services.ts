@@ -78,7 +78,7 @@ const bookTwoConsecutiveSeats = async (id: string) => {
       return {
         success: true,
         message: "Two consecutive seats booked",
-        seats: [i, i + 1],
+        seats: [cinema.seats[i].seatNumber, cinema.seats[i + 1].seatNumber],
       };
     }
   }
