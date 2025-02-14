@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 
 export const cinemasSchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -10,4 +10,12 @@ export const cinemasSchema = new mongoose.Schema({
   ],
 });
 
-export const Cinema = mongoose.model("Cinema", cinemasSchema);
+export type TCinema = Document & {
+  name: string;
+  seats: {
+    seatNumber: number;
+    isAvailable: boolean;
+  }[];
+};
+
+export const Cinema = mongoose.model<TCinema>("Cinema", cinemasSchema);

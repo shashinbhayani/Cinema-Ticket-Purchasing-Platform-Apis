@@ -4,6 +4,7 @@ import { cinemaRouter } from "./routes/index.ts/cinemas.routes";
 import mongoose from "mongoose";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+import bodyParser from "body-parser";
 
 dotenv.config();
 mongoose.connect(process.env.DB_URL as string);
@@ -69,6 +70,8 @@ const options = {
 };
 
 const specs = swaggerJSDoc(options);
+
+app.use(bodyParser.json());
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
